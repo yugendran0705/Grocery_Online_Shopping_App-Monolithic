@@ -138,4 +138,40 @@ class CustomerService {
         }
     }
 
+    manageOrder = async ({ _id, order }) => {
+        try {
+            const customerOrder = await this.customerRepository.addOrderToProfile({ _id, order });
+            return formatData(customerOrder);
+        }
+        catch (err) {
+            if (err instanceof DefinedError) {
+                throw err
+            }
+            else {
+                throw new DefinedError("Error managing order", 500);
+            }
+        }
+    }
+
+    subscribeEvents = async (payload) => {
+        const { event, data } = payload;
+        const { _id, product, order, qty } = data;
+        switch (event) {
+            case 'ADD_TO_CART':
+                return await this.manageCart({ _id, product, quantity: qty, isRemove: false });
+            case 'REMOVE_FROM_CART':
+                return await this.manageCart({ _id, product, quantity: qty, isRemove: true });
+            case 'ADD_ORDER':
+                return await this.manageOrder({ _id, order });
+            case 'ADD_WISHLIST':
+                return await this.addToWishlist({ _id, product_id: product });
+            case 'REMOVE_WISHLIST':
+                return await this.addToWishlist({ _id, product_id: product });
+            default:
+                return formatData(null);
+        }
+    }
+
 }
+
+module.exports = CustomerService
