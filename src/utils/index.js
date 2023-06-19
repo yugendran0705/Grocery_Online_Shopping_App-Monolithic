@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const DefinedError = require('./error-handler');
 
 const { JWT_SECRET } = require('../config');
 
@@ -32,7 +33,7 @@ formatData = (data) => {
         return data;
     }
     else {
-        return null;
+        return DefinedError("Data not found", 404);
     }
 }
 
