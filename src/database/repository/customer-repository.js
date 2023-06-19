@@ -184,13 +184,13 @@ class CustomerRepository {
                 throw new DefinedError("Customer not found", 404)
             }
             else {
-                if (customer.order === undefined) {
-                    customer.order = [];
+                if (customer.orders === undefined) {
+                    customer.orders = [];
                 }
-                customer.order.push(order);
+                customer.orders.push(order);
                 customer.cart = [];
                 await customer.save();
-                return customer.order;
+                return customer.orders;
             }
         }
         catch (err) {
