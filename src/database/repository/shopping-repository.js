@@ -1,5 +1,7 @@
 const DefinedError = require('../utils/DefinedError');
-const { ProductModel, CustomerModel, OrderModel } = require('../models');
+const OrderModel = require('../database/models/Order');
+const CustomerModel = require('../database/models/Customer');
+
 const { v4: uuidv4 } = require('uuid');
 
 class ShoppingRepository {

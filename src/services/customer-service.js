@@ -1,6 +1,6 @@
-const { CustomerRepository } = require('../database');
+const CustomerRepository = require('..database/repository/customer-repository')
 const { generateSalt, generatePassword, generateToken, formatData, validatePassword } = require('../utils');
-const { DefinedError } = require('../utils/error-handler');
+const DefinedError = require('../utils/error-handler');
 
 class CustomerService {
     constructor() {
@@ -108,9 +108,9 @@ class CustomerService {
         }
     }
 
-    addToWishlist = async ({ _id, product_id }) => {
+    addToWishlist = async ({ _id, product }) => {
         try {
-            const wishlist = await this.customerRepository.addToWishlist({ _id, product_id });
+            const wishlist = await this.customerRepository.addToWishlist({ _id, product });
             return formatData(wishlist);
         }
         catch (err) {

@@ -1,17 +1,22 @@
 const express = require('express');
-const { port } = require('./config');
+const app = express();
+const { port } = require('./config/index');
+const { connect } = require('./database/connection');
+const productRoutes = require('./routes/products');
+const customerRoutes = require('./routes/customer');
+const shoppingRoutes = require('./routes/shopping');
 
+app.use(express.json());
+app.use('api/products', productRoutes);
+app.use('api/customer', customerRoutes);
+app.use('api/shopping', shoppingRoutes);
 
-const startServer = async () => {
-    const app = express();
-
-    app.listen(port, () => {
-        console.log(`Server listening on port ${port}`);
-    })
-        .on('error', (err) => {
-            console.log(`Error: ${err}`);
-            process.exit();
-        })
-}
-
-startServer();
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
+    if (connect()) {
+        console.log('Database connected');
+    }
+    else {
+        console.log('Database connection failed');
+    }
+});

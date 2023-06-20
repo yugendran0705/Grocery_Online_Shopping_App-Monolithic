@@ -1,4 +1,5 @@
-const { CustomerModel, AddressModel } = require('../models');
+const CustomerModel = require('../models/Customer');
+const AddressModel = require('../models/Address');
 const DefinedError = require('../../utils/error-handler');
 class CustomerRepository {
     createCustomer = async ({ email, password, phone, salt }) => {
