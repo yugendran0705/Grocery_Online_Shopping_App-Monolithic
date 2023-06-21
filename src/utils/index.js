@@ -12,7 +12,7 @@ generatePassword = async (password, salt) => {
 }
 
 validatePassword = async (enteredpassword, savedpassword, salt) => {
-    return (await this.generatePassword(enteredpassword, salt)) === savedpassword;
+    return (await generatePassword(enteredpassword, salt)) === savedpassword;
 }
 
 generateToken = async (payload) => {
