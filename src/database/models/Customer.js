@@ -15,6 +15,11 @@ const customerSchema = new Schema({
         type: Number,
         required: true
     },
+    password: {
+        type: String,
+        required: true
+    },
+    salt: String,
     address: [{
         type: Schema.Types.ObjectId,
         ref: 'Address'
