@@ -11,9 +11,9 @@ app.use('api/products', productRoutes);
 app.use('api/customer', customerRoutes);
 app.use('api/shopping', shoppingRoutes);
 
-app.listen(port, () => {
+app.listen(port, async () => {
     console.log(`Server started on port ${port}`);
-    if (connect()) {
+    if (await connect()) {
         console.log('Database connected');
     }
     else {
