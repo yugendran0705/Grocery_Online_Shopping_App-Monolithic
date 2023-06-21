@@ -4,10 +4,11 @@ const { dbUrl } = require('../config');
 const connect = async () => {
     try {
         await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
-        console.log('Database connected');
+        return true;
     }
     catch (err) {
         console.log(`Error: ${err}`)
+        return false;
     }
 }
 
