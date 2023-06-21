@@ -3,16 +3,16 @@ const service = new CustomerService();
 
 const signup = async (req, res, next) => {
     try {
-        const { email, password, phone } = req.body
-        if (!email || !password || !phone) {
-            res.status(400).json({ message: "Email, password and phone are required" });
+        const { name, email, password, phone } = req.body
+        if (!email || !password || !phone || !name) {
+            res.status(400).json({ message: "Email ,name ,password and phone are required" });
             return
         }
         const customer = await service.signUp(req.body);
         res.status(200).json({ customer });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -27,7 +27,7 @@ const signin = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -42,7 +42,7 @@ const addNewAddress = async (req, res, next) => {
         res.status(200).json({ address });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -57,7 +57,7 @@ const getCustomer = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -73,7 +73,7 @@ const getCustomerOrders = async (req, res, next) => {
         res.status(200).json({ orders });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -88,7 +88,7 @@ const getCustomerWishlist = async (req, res, next) => {
         res.status(200).json({ wishlist });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
