@@ -30,11 +30,11 @@ class CustomerService {
         }
     }
 
-    signUp = async ({ email, password, phone }) => {
+    signUp = async ({ name, email, password, phone }) => {
         try {
             const salt = await generateSalt();
             const hash = await generatePassword(password, salt);
-            const customer = await this.customerRepository.createCustomer({ email, password: hash, phone, salt });
+            const customer = await this.customerRepository.createCustomer({ name, email, password: hash, phone, salt });
             const token = await generateToken({ email: customer.email, _id: customer._id });
             return formatData({ id: customer._id, token });
         }
@@ -65,7 +65,7 @@ class CustomerService {
 
     getCustomer = async ({ _id }) => {
         try {
-            const customerDetails = await this.customerRepository.findCustomer({ _id });
+            const customerDetails = await this.customerRepository.findCustomerById({ _id });
             return formatData(customerDetails);
         }
         catch (err) {
