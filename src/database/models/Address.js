@@ -11,12 +11,8 @@ const addressSchema = new Schema({
         type: String,
         required: true
     },
-    pincode: {
+    postalcode: {
         type: Number,
-        required: true
-    },
-    state: {
-        type: String,
         required: true
     },
     country: {
