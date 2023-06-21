@@ -2,14 +2,14 @@ const CustomerModel = require('../models/Customer');
 const AddressModel = require('../models/Address');
 const { DefinedError } = require('../../utils/error-handler');
 class CustomerRepository {
-    createCustomer = async ({ email, password, phone, salt }) => {
+    createCustomer = async ({ name, email, password, phone, salt }) => {
         try {
             const customer_check = await CustomerModel.findOne({ email: email });
             if (customer_check) {
                 throw new DefinedError("Account already exists", 409)
             }
             else {
-                const customer = await CustomerModel.create({ email, password, phone, salt });
+                const customer = await CustomerModel.create({ name, email, password, phone, salt });
                 return customer;
             }
         }
@@ -26,6 +26,7 @@ class CustomerRepository {
     createAddress = async ({ _id, street, postalcode, city, country }) => {
         try {
             const customer = await CustomerModel.findById(_id);
+            console.log(customer);
             if (!customer) {
                 throw new DefinedError("Customer not found", 404)
             }
