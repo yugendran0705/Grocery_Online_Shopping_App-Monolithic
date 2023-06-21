@@ -7,9 +7,9 @@ const customerRoutes = require('./routes/customer');
 const shoppingRoutes = require('./routes/shopping');
 
 app.use(express.json());
-app.use('api/products', productRoutes);
-app.use('api/customer', customerRoutes);
-app.use('api/shopping', shoppingRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/customer', customerRoutes);
+app.use('/api/shopping', shoppingRoutes);
 
 app.listen(port, async () => {
     console.log(`Server started on port ${port}`);
