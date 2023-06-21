@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const DefinedError = require('./error-handler');
+const { DefinedError } = require('./error-handler');
 const { jwtSecret } = require('../config/index');
 
 generateSalt = async () => {
