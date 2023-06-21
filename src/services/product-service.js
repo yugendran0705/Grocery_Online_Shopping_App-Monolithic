@@ -1,6 +1,6 @@
-const ProductRepository = require('../database/repository/product-repository');
+const { ProductRepository } = require('../database/repository/product-repository');
 const { formatData } = require('../utils/index');
-const DefinedError = require('../utils/error-handler');
+const { DefinedError } = require('../utils/error-handler');
 
 class ProductService {
     constructor() {
@@ -91,4 +91,4 @@ class ProductService {
 
 }
 
-module.exports = ProductService 
+module.exports = { ProductService } 
