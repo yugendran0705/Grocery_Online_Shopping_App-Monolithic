@@ -14,7 +14,7 @@ const createProduct = async (req, res, next) => {
         res.status(200).json({ product });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -29,7 +29,7 @@ const byCatogery = async (req, res, next) => {
         res.status(200).json({ product });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -44,7 +44,7 @@ const byId = async (req, res, next) => {
         res.status(200).json({ product });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -60,7 +60,7 @@ const manyById = async (req, res, next) => {
 
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -76,7 +76,7 @@ const addToWishlist = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -93,7 +93,7 @@ const deleteFromWishlist = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -109,7 +109,7 @@ const addToCart = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -126,7 +126,7 @@ const deleteFromCart = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -136,7 +136,7 @@ const getProducts = async (req, res, next) => {
         res.status(200).json({ products });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
