@@ -8,14 +8,14 @@ const {
     getCustomerOrders,
     getCustomerWishlist
 } = require('../controllers/customer');
-const { verifyToken } = require('../middlewares/auth');
+const { validateToken } = require('../middlewares/auth');
 
 router.post('/signup', signup);
 router.post('/signin', signin);
-router.post('/address', verifyToken, addNewAddress);
+router.post('/address', validateToken, addNewAddress);
 
-router.get('/profile', verifyToken, getCustomer);
-router.get('/shoppingdetails', verifyToken, getCustomerOrders);
-router.get('/wishlist', verifyToken, getCustomerWishlist);
+router.get('/profile', validateToken, getCustomer);
+router.get('/shoppingdetails', validateToken, getCustomerOrders);
+router.get('/wishlist', validateToken, getCustomerWishlist);
 
 module.exports = router;
