@@ -1,5 +1,5 @@
 const ProductModel = require('../models/Product');
-const DefinedError = require('../../utils/error-handler');
+const { DefinedError } = require('../../utils/error-handler');
 
 class ProductRepository {
     createProduct = async ({ name, desc, banner, type, unit, price, available, suplier }) => {
@@ -84,4 +84,4 @@ class ProductRepository {
     }
 }
 
-module.exports = ProductRepository
+module.exports = { ProductRepository }
