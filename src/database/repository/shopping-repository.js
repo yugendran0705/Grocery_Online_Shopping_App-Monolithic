@@ -1,6 +1,6 @@
-const DefinedError = require('../utils/DefinedError');
-const OrderModel = require('../database/models/Order');
-const CustomerModel = require('../database/models/Customer');
+const { DefinedError } = require('../../utils/error-handler');
+const OrderModel = require('../models/Order');
+const CustomerModel = require('../models/Customer');
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -50,4 +50,4 @@ class ShoppingRepository {
     }
 }
 
-module.exports = ShoppingRepository
+module.exports = { ShoppingRepository }
