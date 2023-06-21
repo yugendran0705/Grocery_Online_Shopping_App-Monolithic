@@ -1,7 +1,7 @@
-const shoppingService = require('../services/shopping-service');
-const service = new shoppingService();
-const UserService = require('../services/customer-service');
-const userService = new UserService();
+const { ShoppingService } = require('../services/shopping-service');
+const service = new ShoppingService();
+const { CustomerService } = require('../services/customer-service');
+const userService = new CustomerService();
 
 const createOrder = async (req, res, next) => {
     try {
