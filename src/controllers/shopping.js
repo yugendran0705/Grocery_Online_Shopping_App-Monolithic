@@ -14,7 +14,7 @@ const createOrder = async (req, res, next) => {
         res.status(200).json({ order });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -30,7 +30,7 @@ const getOrderDetails = async (req, res, next) => {
         res.status(200).json({ orders });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -46,7 +46,7 @@ const getCartDetails = async (req, res, next) => {
         res.status(200).json({ cart });
     }
     catch (err) {
-        next(err);
+        res.status(500).json({ message: err.message });
     }
 }
 
