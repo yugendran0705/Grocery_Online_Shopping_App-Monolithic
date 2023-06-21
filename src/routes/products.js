@@ -11,19 +11,19 @@ const {
     deleteFromCart,
     getProducts
 } = require('../controllers/products');
-const { verifyToken } = require('../middlewares/auth');
+const { validateToken } = require('../middlewares/auth');
 
-router.post('/create', verifyToken, createProduct);
+router.post('/create', validateToken, createProduct);
 router.post('/ids', manyById);
 
 router.get('/:type', byCatogery);
 router.get('/:_id', byId);
 router.get('/', getProducts);
 
-router.put('/wishlist', verifyToken, addToWishlist);
-router.put('/cart', verifyToken, addToCart);
+router.put('/wishlist', validateToken, addToWishlist);
+router.put('/cart', validateToken, addToCart);
 
-router.delete('/wishlist/:id', verifyToken, deleteFromWishlist);
-router.delete('/cart/:id', verifyToken, deleteFromCart);
+router.delete('/wishlist/:id', validateToken, deleteFromWishlist);
+router.delete('/cart/:id', validateToken, deleteFromCart);
 
 module.exports = router;
