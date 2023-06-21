@@ -1,6 +1,6 @@
-const CustomerRepository = require('..database/repository/customer-repository')
+const { CustomerRepository } = require('../database/repository/customer-repository')
 const { generateSalt, generatePassword, generateToken, formatData, validatePassword } = require('../utils');
-const DefinedError = require('../utils/error-handler');
+const { DefinedError } = require('../utils/error-handler');
 
 class CustomerService {
     constructor() {
@@ -174,4 +174,4 @@ class CustomerService {
 
 }
 
-module.exports = CustomerService
+module.exports = { CustomerService }
