@@ -5,11 +5,11 @@ const {
     getOrderDetails,
     getCartDetails
 } = require('../controllers/shopping');
-const { verifyToken } = require('../middlewares/auth');
+const { validateToken } = require('../middlewares/auth');
 
-router.post('/order', verifyToken, createOrder);
+router.post('/order', validateToken, createOrder);
 
-router.get('/orders', verifyToken, getOrderDetails);
-router.get('/cart', verifyToken, getCartDetails);
+router.get('/orders', validateToken, getOrderDetails);
+router.get('/cart', validateToken, getCartDetails);
 
 module.exports = router;
