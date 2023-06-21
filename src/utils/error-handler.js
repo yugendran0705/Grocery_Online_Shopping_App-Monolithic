@@ -4,4 +4,4 @@ class DefinedError extends Error {
         this.statusCode = statusCode
     }
 }
-module.exports = DefinedError;
+module.exports = { DefinedError }
