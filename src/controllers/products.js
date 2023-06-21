@@ -1,5 +1,5 @@
-const ProductService = require('../services/product-service');
-const CustomerService = require('../services/customer-service');
+const { ProductService } = require('../services/product-service');
+const { CustomerService } = require('../services/customer-service');
 const service = new ProductService();
 const customerService = new CustomerService();
 
