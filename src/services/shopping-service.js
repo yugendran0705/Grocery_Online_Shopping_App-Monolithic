@@ -1,5 +1,5 @@
-const ShoppingRepository = require('../database/repository/shopping-repository');
-const DefinedError = require('../utils/error-handler');
+const { ShoppingRepository } = require('../database/repository/shopping-repository');
+const { DefinedError } = require('../utils/error-handler');
 
 class ShoppingService {
     constructor() {
@@ -33,4 +33,4 @@ class ShoppingService {
     }
 }
 
-module.exports = ShoppingService
+module.exports = { ShoppingService }
