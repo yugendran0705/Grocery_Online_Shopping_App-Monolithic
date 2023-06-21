@@ -1,5 +1,4 @@
-const CustomerService = require('../services/customer-service');
-
+const { CustomerService } = require('../services/customer-service');
 const service = new CustomerService();
 
 const signup = async (req, res, next) => {
