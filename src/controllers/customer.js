@@ -12,7 +12,7 @@ const signup = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(err.statusCode).json({ message: err.message });
     }
 }
 
@@ -27,7 +27,7 @@ const signin = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(err.statusCode).json({ message: err.message });
     }
 }
 
@@ -42,7 +42,7 @@ const addNewAddress = async (req, res, next) => {
         res.status(200).json({ address });
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(err.statusCode).json({ message: err.message });
     }
 }
 
@@ -57,7 +57,7 @@ const getCustomer = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(err.statusCode).json({ message: err.message });
     }
 }
 
@@ -73,7 +73,7 @@ const getCustomerOrders = async (req, res, next) => {
         res.status(200).json({ orders });
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(err.statusCode).json({ message: err.message });
     }
 }
 
@@ -88,7 +88,7 @@ const getCustomerWishlist = async (req, res, next) => {
         res.status(200).json({ wishlist });
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(err.statusCode).json({ message: err.message });
     }
 }
 
