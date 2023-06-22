@@ -153,25 +153,6 @@ class CustomerService {
         }
     }
 
-    subscribeEvents = async (payload) => {
-        const { event, data } = payload;
-        const { _id, product, order, qty } = data;
-        switch (event) {
-            case 'ADD_TO_CART':
-                return await this.manageCart({ _id, product, quantity: qty, isRemove: false });
-            case 'REMOVE_FROM_CART':
-                return await this.manageCart({ _id, product, quantity: qty, isRemove: true });
-            case 'ADD_ORDER':
-                return await this.manageOrder({ _id, order });
-            case 'ADD_WISHLIST':
-                return await this.addToWishlist({ _id, product_id: product });
-            case 'REMOVE_WISHLIST':
-                return await this.addToWishlist({ _id, product_id: product });
-            default:
-                return formatData(null);
-        }
-    }
-
 }
 
 module.exports = { CustomerService }
