@@ -33,7 +33,7 @@ class ProductRepository {
         }
     }
 
-    FindById = async ({ _id }) => {
+    FindById = async (_id) => {
         try {
             const product = await ProductModel.findById(_id);
             if (!product) {
@@ -53,7 +53,7 @@ class ProductRepository {
         }
     }
 
-    FindByCatogery = async ({ type }) => {
+    FindByCatogery = async (type) => {
         try {
             const product = await ProductModel.find({ type: type });
             if (!product) {
@@ -73,7 +73,7 @@ class ProductRepository {
         }
     }
 
-    FindSelected = async ({ selectedIds }) => {
+    FindSelected = async (selectedIds) => {
         try {
             const products = await ProductModel.find({ _id: { $in: selectedIds } });
             return products;

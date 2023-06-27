@@ -27,7 +27,12 @@ const customerSchema = new Schema({
     cart: [{
         type: Schema.Types.ObjectId,
         ref: 'Product'
-    }],
+    },
+    unit = {
+        type: Number,
+        required: true
+    }
+    ],
     orders: [{
         type: Schema.Types.ObjectId,
         ref: 'Order'

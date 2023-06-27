@@ -1,7 +1,8 @@
 const { CustomerService } = require('../services/customer-service');
 const service = new CustomerService();
+const { DefinedError } = require('../utils/error-handler');
 
-const signup = async (req, res, next) => {
+const signup = async (req, res) => {
     try {
         const { name, email, password, phone } = req.body
         if (!email || !password || !phone || !name) {
@@ -12,26 +13,34 @@ const signup = async (req, res, next) => {
         res.status(200).json({ customer });
     }
     catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        if (err instanceof DefinedError) {
+            res.status(err.statusCode).json({ message: err.message });
+            return
+        }
+        res.status(500).json({ message: "Error signing up" });
     }
 }
 
-const signin = async (req, res, next) => {
+const signin = async (req, res) => {
     try {
         const { email, password } = req.body
         if (!email || !password) {
             res.status(400).json({ message: "Email and password are required" });
             return
         }
-        const customer = await service.signIn(req.body);
+        const customer = await service.signIn(email, password);
         res.status(200).json({ customer });
     }
     catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        if (err instanceof DefinedError) {
+            res.status(err.statusCode).json({ message: err.message });
+            return
+        }
+        res.status(500).json({ message: "Error signing in" });
     }
 }
 
-const addNewAddress = async (req, res, next) => {
+const addNewAddress = async (req, res) => {
     try {
         const { _id, street, postalcode, city, country } = req.body
         if (!_id || !street || !postalcode || !city || !country) {
@@ -42,53 +51,70 @@ const addNewAddress = async (req, res, next) => {
         res.status(200).json({ address });
     }
     catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        if (err instanceof DefinedError) {
+            res.status(err.statusCode).json({ message: err.message });
+            return
+        }
+        res.status(500).json({ message: "Error adding address" });
     }
 }
 
-const getCustomer = async (req, res, next) => {
+const getCustomer = async (req, res) => {
     try {
         const { _id } = req.body
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return
         }
-        const customer = await service.getCustomer(req.body);
+        const customer = await service.getCustomer(_id);
         res.status(200).json({ customer });
     }
     catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        if (err instanceof DefinedError) {
+            res.status(err.statusCode).json({ message: err.message });
+            return
+        }
+        res.status(500).json({ message: "error getting customer" })
     }
 }
 
-const getCustomerOrders = async (req, res, next) => {
+const getCustomerOrders = async (req, res) => {
     try {
         const { _id } = req.body
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return
         }
-        const customer = await service.getCustomer(req.body);
+        const customer = await service.getCustomer(_id);
         const orders = customer.orders
         res.status(200).json({ orders });
     }
     catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        if (err instanceof DefinedError) {
+            res.status(err.statusCode).json({ message: err.message });
+            return
+        }
+        res.status(500).json({ message: "error getting customer orders" })
     }
 }
 
-const getCustomerWishlist = async (req, res, next) => {
+const getCustomerWishlist = async (req, res) => {
     try {
         const { _id } = req.body
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return
         }
-        const wishlist = await service.getWishlist(req.body);
+        const customer = await service.getWishlist(_id);
+        const wishlist = customer.wishlist
         res.status(200).json({ wishlist });
     }
     catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        if (err instanceof DefinedError) {
+            res.status(err.statusCode).json({ message: err.message });
+            return
+        }
+        res.status(500).json({ message: "error getting customer wishlist" })
     }
 }
 

@@ -7,9 +7,9 @@ class CustomerService {
         this.customerRepository = new CustomerRepository();
     }
 
-    signIn = async ({ email, password }) => {
+    signIn = async (email, password) => {
         try {
-            const customer = await this.customerRepository.findCustomer({ email });
+            const customer = await this.customerRepository.findCustomer(email);
             if (customer) {
                 const validPassword = await validatePassword(password, customer.password, customer.salt);
                 if (validPassword) {
@@ -63,9 +63,9 @@ class CustomerService {
         }
     }
 
-    getCustomer = async ({ _id }) => {
+    getCustomer = async (_id) => {
         try {
-            const customerDetails = await this.customerRepository.findCustomerById({ _id });
+            const customerDetails = await this.customerRepository.findCustomerById(_id);
             return formatData(customerDetails);
         }
         catch (err) {
@@ -78,9 +78,9 @@ class CustomerService {
         }
     }
 
-    getShoppingDetails = async ({ _id }) => {
+    getShoppingDetails = async (_id) => {
         try {
-            const customerDetails = await this.customerRepository.findCustomer({ _id });
+            const customerDetails = await this.customerRepository.findCustomer(_id);
             return formatData(customerDetails);
         }
         catch (err) {
@@ -93,9 +93,9 @@ class CustomerService {
         }
     }
 
-    getWishlist = async ({ _id }) => {
+    getWishlist = async (_id) => {
         try {
-            const customerwishlist = await this.customerRepository.findCustomer({ _id });
+            const customerwishlist = await this.customerRepository.findCustomerById(_id);
             return formatData(customerwishlist);
         }
         catch (err) {
@@ -108,9 +108,9 @@ class CustomerService {
         }
     }
 
-    addToWishlist = async ({ _id, product }) => {
+    addToWishlist = async (_id, product) => {
         try {
-            const wishlist = await this.customerRepository.addToWishlist({ _id, product });
+            const wishlist = await this.customerRepository.addToWishlist(_id, product);
             return formatData(wishlist);
         }
         catch (err) {
@@ -123,9 +123,9 @@ class CustomerService {
         }
     }
 
-    manageCart = async ({ _id, product, quantity, isRemove }) => {
+    manageCart = async (_id, product, quantity, isRemove) => {
         try {
-            const cart = await this.customerRepository.addCartItems({ _id, product, quantity, isRemove });
+            const cart = await this.customerRepository.addCartItems(_id, product, quantity, isRemove);
             return formatData(cart);
         }
         catch (err) {
@@ -138,9 +138,9 @@ class CustomerService {
         }
     }
 
-    manageOrder = async ({ _id, order }) => {
+    manageOrder = async (_id, order) => {
         try {
-            const customerOrder = await this.customerRepository.addOrderToProfile({ _id, order });
+            const customerOrder = await this.customerRepository.addOrderToProfile(_id, order);
             return formatData(customerOrder);
         }
         catch (err) {

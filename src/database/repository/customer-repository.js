@@ -47,7 +47,7 @@ class CustomerRepository {
         }
     }
 
-    findCustomer = async ({ email }) => {
+    findCustomer = async (email) => {
         try {
             const customer_check = await CustomerModel.findOne({ email: email });
             if (!customer_check) {
@@ -67,9 +67,9 @@ class CustomerRepository {
         }
     }
 
-    findCustomerById = async ({ id }) => {
+    findCustomerById = async (id) => {
         try {
-            const customer_check = await CustomerModel.findOne(id);
+            const customer_check = await CustomerModel.findById(id);
             if (!customer_check) {
                 throw new DefinedError("Customer not found", 404)
             }
@@ -87,7 +87,7 @@ class CustomerRepository {
         }
     }
 
-    wishlist = async ({ customer_id }) => {
+    wishlist = async (customer_id) => {
         try {
             const profile = await CustomerModel.findById(customer_id).populate('wishlist');
             return profile.wishlist;
@@ -97,7 +97,7 @@ class CustomerRepository {
         }
     }
 
-    addToWishlist = async ({ customer_id, product }) => {
+    addToWishlist = async (customer_id, product) => {
         try {
             const customer = await CustomerModel.findById(customer_id).populate('wishlist');
             if (!customer) {
@@ -136,7 +136,7 @@ class CustomerRepository {
         }
     }
 
-    addCartItems = async ({ customer_id, product, qty, isRemove }) => {
+    addCartItems = async (customer_id, product, qty, isRemove) => {
         try {
             const customer = await CustomerModel.findById(customer_id).populate('cart.product');
             if (!customer) {
@@ -152,8 +152,13 @@ class CustomerRepository {
                     let isExist = false;
                     cart.map((item) => {
                         if (item.product._id.toString() === product._id.toString()) {
-                            const index = cart.indexOf(item);
-                            cart.splice(index, 1);
+                            if (isRemove) {
+                                const index = cart.indexOf(item);
+                                cart.splice(index, 1);
+                            }
+                            else {
+                                item.unit = qty;
+                            }
                             isExist = true;
                         }
                     });
@@ -179,7 +184,7 @@ class CustomerRepository {
         }
     }
 
-    addOrderToProfile = async ({ customer_id, order }) => {
+    addOrderToProfile = async (customer_id, order) => {
         try {
             const customer = await CustomerModel.findById(customer_id);
             if (!customer) {
