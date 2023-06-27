@@ -61,7 +61,7 @@ class ProductService {
 
     getSelectedProducts = async (productIds) => {
         try {
-            const products = await this.productRepository.FindSelectedProducts(productIds);
+            const products = await this.productRepository.FindSelected(productIds);
             return formatData(products);
         }
         catch (err) {

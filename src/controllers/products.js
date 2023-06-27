@@ -3,7 +3,7 @@ const { CustomerService } = require('../services/customer-service');
 const service = new ProductService();
 const customerService = new CustomerService();
 
-const createProduct = async (req, res, next) => {
+const createProduct = async (req, res) => {
     try {
         const { name, desc, type, unit, price, available, suplier, banner } = req.body;
         if (!name || !desc || !type || !unit || !price || !available || !suplier || !banner) {
@@ -18,14 +18,14 @@ const createProduct = async (req, res, next) => {
     }
 }
 
-const byCatogery = async (req, res, next) => {
+const byCatogery = async (req, res) => {
     try {
         const { type } = req.params.type;
         if (!type) {
             res.status(400).json({ message: "Type is required" });
             return
         }
-        const product = await service.getProductByCategory(req.body);
+        const product = await service.getProductByCategory(type);
         res.status(200).json({ product });
     }
     catch (err) {
@@ -33,7 +33,7 @@ const byCatogery = async (req, res, next) => {
     }
 }
 
-const byId = async (req, res, next) => {
+const byId = async (req, res) => {
     try {
         const _id = req.params.id;
         if (!_id) {
@@ -48,7 +48,7 @@ const byId = async (req, res, next) => {
     }
 }
 
-const manyById = async (req, res, next) => {
+const manyById = async (req, res) => {
     try {
         const { ids } = req.body;
         if (!ids) {
@@ -64,7 +64,7 @@ const manyById = async (req, res, next) => {
     }
 }
 
-const addToWishlist = async (req, res, next) => {
+const addToWishlist = async (req, res) => {
     try {
         const { customerId, productId } = req.body;
         if (!customerId || !productId) {
@@ -80,7 +80,7 @@ const addToWishlist = async (req, res, next) => {
     }
 }
 
-const deleteFromWishlist = async (req, res, next) => {
+const deleteFromWishlist = async (req, res) => {
     try {
         const { customerId } = req.body;
         const { productId } = req.params;
@@ -97,7 +97,7 @@ const deleteFromWishlist = async (req, res, next) => {
     }
 }
 
-const addToCart = async (req, res, next) => {
+const addToCart = async (req, res) => {
     try {
         const { customerId, productId, quantity } = req.body;
         if (!customerId || !productId || !quantity) {
@@ -113,7 +113,7 @@ const addToCart = async (req, res, next) => {
     }
 }
 
-const deleteFromCart = async (req, res, next) => {
+const deleteFromCart = async (req, res) => {
     try {
         const { customerId } = req.body;
         const { productId } = req.params;
@@ -130,7 +130,7 @@ const deleteFromCart = async (req, res, next) => {
     }
 }
 
-const getProducts = async (req, res, next) => {
+const getProducts = async (req, res) => {
     try {
         const products = await service.getProducts();
         res.status(200).json({ products });

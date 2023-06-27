@@ -14,9 +14,9 @@ const {
 const { validateToken } = require('../middlewares/auth');
 
 router.post('/create', validateToken, createProduct);
-router.post('/ids', manyById);
 
-router.get('/:type', byCatogery);
+router.get('/ids', manyById);
+router.get('/in/:type', byCatogery);
 router.get('/:_id', byId);
 router.get('/', getProducts);
 
