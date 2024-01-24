@@ -11,8 +11,8 @@ generatePassword = async (password, salt) => {
     return await bcrypt.hash(password, salt);
 }
 
-validatePassword = async (enteredpassword, savedpassword, salt) => {
-    return (await generatePassword(enteredpassword, salt)) === savedpassword;
+validatePassword = async (enteredpassword, savedpassword) => {
+    return await bcrypt.compare(enteredpassword, savedpassword);
 }
 
 generateToken = async (payload) => {

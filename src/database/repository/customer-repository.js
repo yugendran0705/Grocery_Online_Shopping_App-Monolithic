@@ -99,12 +99,13 @@ class CustomerRepository {
 
     addToWishlist = async (customer_id, product) => {
         try {
-            const customer = await CustomerModel.findById(customer_id).populate('wishlist');
+            const customer = await CustomerModel.findById(customer_id);
             if (!customer) {
                 throw new DefinedError("Customer not found", 404)
             }
             else {
                 let wishlist = customer.wishlist;
+                console.log(wishlist);
                 if (wishlist.length > 0) {
                     let isExist = false;
                     wishlist.map((item) => {
@@ -127,6 +128,7 @@ class CustomerRepository {
             return customer.wishlist;
         }
         catch (err) {
+            console.log(err);
             if (err instanceof DefinedError) {
                 throw err;
             }
@@ -138,26 +140,25 @@ class CustomerRepository {
 
     addCartItems = async (customer_id, product, qty, isRemove) => {
         try {
-            const customer = await CustomerModel.findById(customer_id).populate('cart.product');
+            const customer = await CustomerModel.findById(customer_id);
             if (!customer) {
                 throw new DefinedError("Customer not found", 404)
             }
             else {
-                const cartItem = {
-                    product,
-                    unit: qty
-                }
+                const cartItem = {};
+                cartItem.product = product._id;
+                cartItem.quantity = qty;
                 let cart = customer.cart;
                 if (cart.length > 0) {
                     let isExist = false;
                     cart.map((item) => {
-                        if (item.product._id.toString() === product._id.toString()) {
+                        if (item.product.toString() === product._id.toString()) {
                             if (isRemove) {
                                 const index = cart.indexOf(item);
                                 cart.splice(index, 1);
                             }
                             else {
-                                item.unit = qty;
+                                item.quantity = qty;
                             }
                             isExist = true;
                         }
@@ -167,14 +168,16 @@ class CustomerRepository {
                     }
                 }
                 else {
+                    console.log(cartItem);
                     cart.push(cartItem);
                 }
                 customer.cart = cart;
-                const updatedCustomer = await customer.save();
-                return updatedCustomer.cart;
+                await customer.save();
+                return customer.cart;
             }
         }
         catch (err) {
+            console.log(err);
             if (err instanceof DefinedError) {
                 throw err;
             }

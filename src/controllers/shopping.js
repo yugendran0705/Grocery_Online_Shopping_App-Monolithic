@@ -3,14 +3,16 @@ const service = new ShoppingService();
 const { CustomerService } = require('../services/customer-service');
 const userService = new CustomerService();
 
-const createOrder = async (req, res, next) => {
+const createOrder = async (req, res) => {
     try {
-        const { _id, txn_id } = req.body
+        const { _id } = req.user
+        console.log(_id)
+        const { txn_id } = req.body
         if (!_id || !txn_id) {
             res.status(400).json({ message: "Customer id and txn id are required" });
             return
         }
-        const order = await service.createOrder(_id, txn_id);
+        const order = await service.placeOrder(_id, txn_id);
         res.status(200).json({ order });
     }
     catch (err) {
@@ -18,9 +20,9 @@ const createOrder = async (req, res, next) => {
     }
 }
 
-const getOrderDetails = async (req, res, next) => {
+const getOrderDetails = async (req, res) => {
     try {
-        const { _id } = req.body
+        const { _id } = req.user
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return
@@ -34,9 +36,9 @@ const getOrderDetails = async (req, res, next) => {
     }
 }
 
-const getCartDetails = async (req, res, next) => {
+const getCartDetails = async (req, res) => {
     try {
-        const { _id } = req.body
+        const { _id } = req.user
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return

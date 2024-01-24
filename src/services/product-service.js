@@ -22,7 +22,7 @@ class ProductService {
 
     getProducts = async () => {
         try {
-            const products = await this.productRepository.getProducts();
+            const products = await this.productRepository.products();
             return formatData(products);
         } catch (err) {
             if (err instanceof DefinedError) {

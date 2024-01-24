@@ -13,7 +13,7 @@ const {
 } = require('../controllers/products');
 const { validateToken } = require('../middlewares/auth');
 
-router.post('/create', validateToken, createProduct);
+router.post('/', validateToken, createProduct);
 
 router.get('/ids', manyById);
 router.get('/in/:type', byCatogery);

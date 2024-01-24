@@ -42,7 +42,8 @@ const signin = async (req, res) => {
 
 const addNewAddress = async (req, res) => {
     try {
-        const { _id, street, postalcode, city, country } = req.body
+        const { _id } = req.user
+        const { street, postalcode, city, country } = req.body
         if (!_id || !street || !postalcode || !city || !country) {
             res.status(400).json({ message: "Customer id, street, postalcode, city and country are required" });
             return
@@ -61,7 +62,7 @@ const addNewAddress = async (req, res) => {
 
 const getCustomer = async (req, res) => {
     try {
-        const { _id } = req.body
+        const { _id } = req.user
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return
@@ -74,13 +75,13 @@ const getCustomer = async (req, res) => {
             res.status(err.statusCode).json({ message: err.message });
             return
         }
-        res.status(500).json({ message: "error getting customer" })
+        res.status(500).json({ data: err, message: "error getting customer" })
     }
 }
 
 const getCustomerOrders = async (req, res) => {
     try {
-        const { _id } = req.body
+        const { _id } = req.user
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return
@@ -100,7 +101,7 @@ const getCustomerOrders = async (req, res) => {
 
 const getCustomerWishlist = async (req, res) => {
     try {
-        const { _id } = req.body
+        const { _id } = req.user
         if (!_id) {
             res.status(400).json({ message: "Customer id is required" });
             return

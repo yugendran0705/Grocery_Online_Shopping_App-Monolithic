@@ -2,6 +2,7 @@ const { ProductService } = require('../services/product-service');
 const { CustomerService } = require('../services/customer-service');
 const service = new ProductService();
 const customerService = new CustomerService();
+const { DefinedError } = require('../utils/error-handler');
 
 const createProduct = async (req, res) => {
     try {
@@ -20,7 +21,7 @@ const createProduct = async (req, res) => {
 
 const byCatogery = async (req, res) => {
     try {
-        const { type } = req.params.type;
+        const type = req.params.type;
         if (!type) {
             res.status(400).json({ message: "Type is required" });
             return
@@ -35,7 +36,7 @@ const byCatogery = async (req, res) => {
 
 const byId = async (req, res) => {
     try {
-        const _id = req.params.id;
+        const { _id } = req.params;
         if (!_id) {
             res.status(400).json({ message: "Id is required" });
             return
@@ -66,31 +67,45 @@ const manyById = async (req, res) => {
 
 const addToWishlist = async (req, res) => {
     try {
-        const { customerId, productId } = req.body;
+        const customerId = req.user._id;
+        const { productId } = req.body;
         if (!customerId || !productId) {
             res.status(400).json({ message: "Customer id and product id are required" });
             return
         }
         const product = await service.getProductById(productId);
         const customer = await customerService.addToWishlist(customerId, product);
-        res.status(200).json({ customer });
+        let wishlist = {};
+        if (customer.length !== 0) {
+            wishlist = await service.getProductById(customer[0].toString());
+        }
+        res.status(200).json({ wishlist });
     }
     catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        if (err instanceof DefinedError) {
+            res.status(err.statusCode).json({ message: err.message });
+        }
+        else {
+            res.status(500).json({ message: err.message });
+        }
     }
 }
 
 const deleteFromWishlist = async (req, res) => {
     try {
-        const { customerId } = req.body;
-        const { productId } = req.params;
+        const customerId = req.user._id;
+        const productId = req.params.id;
         if (!customerId || !productId) {
             res.status(400).json({ message: "Customer id and product id are required" });
             return
         }
         const product = await service.getProductById(productId);
         const customer = await customerService.addToWishlist(customerId, product);
-        res.status(200).json({ customer });
+        let wishlist = {};
+        if (customer.length !== 0) {
+            wishlist = await service.getProductById(customer[0].toString());
+        }
+        res.status(200).json({ wishlist });
     }
     catch (err) {
         res.status(err.statusCode).json({ message: err.message });
@@ -99,14 +114,17 @@ const deleteFromWishlist = async (req, res) => {
 
 const addToCart = async (req, res) => {
     try {
-        const { customerId, productId, quantity } = req.body;
+        const customerId = req.user._id;
+        const { productId, quantity } = req.body;
         if (!customerId || !productId || !quantity) {
             res.status(400).json({ message: "Customer id, product id and quantity are required" });
             return
         }
         const product = await service.getProductById(productId);
         const customer = await customerService.manageCart(customerId, product, quantity, false);
-        res.status(200).json({ customer });
+        let cart = await service.getProductById(customer[0].product.toString());
+        cart.quantity = customer[0].quantity;
+        res.status(200).json({ cart });
     }
     catch (err) {
         res.status(err.statusCode).json({ message: err.message });
@@ -115,7 +133,7 @@ const addToCart = async (req, res) => {
 
 const deleteFromCart = async (req, res) => {
     try {
-        const { customerId } = req.body;
+        const customerId = req.user._id;
         const { productId } = req.params;
         if (!customerId || !productId) {
             res.status(400).json({ message: "Customer id and product id are required" });

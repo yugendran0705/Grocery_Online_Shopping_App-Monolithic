@@ -19,19 +19,21 @@ const customerSchema = new Schema({
         type: String,
         required: true
     },
-    salt: String,
     address: [{
         type: Schema.Types.ObjectId,
         ref: 'Address'
     }],
-    cart: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Product'
-    },
-    unit = {
-        type: Number,
-        required: true
-    }
+    cart: [
+        {
+            product: {
+                type: Schema.Types.ObjectId,
+                ref: 'Product'
+            },
+            quantity: {
+                type: Number,
+                default: 1
+            }
+        }
     ],
     orders: [{
         type: Schema.Types.ObjectId,

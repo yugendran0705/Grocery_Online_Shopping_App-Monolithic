@@ -8,7 +8,7 @@ class ShoppingService {
 
     placeOrder = async (customer_id, TnxId) => {
         try {
-            const order = await this.Repository.createNewOrder({ customer_id, TnxId });
+            const order = await this.Repository.createNewOrder(customer_id, TnxId);
             return order;
         } catch (err) {
             if (err instanceof DefinedError) {
@@ -21,7 +21,7 @@ class ShoppingService {
 
     getOrders = async (customer_id) => {
         try {
-            const orders = await this.Repository.orders({ _id: customer_id });
+            const orders = await this.Repository.orders(customer_id);
             return orders;
         } catch (err) {
             if (err instanceof DefinedError) {

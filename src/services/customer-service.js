@@ -11,7 +11,7 @@ class CustomerService {
         try {
             const customer = await this.customerRepository.findCustomer(email);
             if (customer) {
-                const validPassword = await validatePassword(password, customer.password, customer.salt);
+                const validPassword = await validatePassword(password, customer.password);
                 if (validPassword) {
                     const token = await generateToken({ email: customer.email, _id: customer._id });
                     return formatData({ id: customer._id, token });
@@ -34,7 +34,7 @@ class CustomerService {
         try {
             const salt = await generateSalt();
             const hash = await generatePassword(password, salt);
-            const customer = await this.customerRepository.createCustomer({ name, email, password: hash, phone, salt });
+            const customer = await this.customerRepository.createCustomer({ name, email, password: hash, phone });
             const token = await generateToken({ email: customer.email, _id: customer._id });
             return formatData({ id: customer._id, token });
         }
